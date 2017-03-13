@@ -52,5 +52,3 @@ myAction$.mergeMap<Action, PayloadAction>(() => {
     }));
 });
 ```
-
----

@@ -1,4 +1,4 @@
-# RxJS - Good Parts
+# RxJS - The Good Parts
 
 # Rangle.io
 ### Chris Gosselin & Daniel Figueiredo
@@ -11,11 +11,11 @@
 
 ## Summary
 
-- RxJS Errors
+- RxJS Internal Errors
 - Handling Observable Errors
 - Observable & Typescript Generics
 - Common Operators
-- RxJS and Angular
+- RxJS vs Arrays
 
 ---
 
@@ -24,6 +24,4 @@
 - Good tips and better understanding of RxJS errors
 - How to proper type your observables and get compile errors
 - Most useful operators
-- Use cases with Angular
-
----
+- What you can get out of RxJS vs arrays

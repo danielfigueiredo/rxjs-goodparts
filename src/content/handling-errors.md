@@ -105,5 +105,3 @@ DbUtils.getData()
 
 - `socket` will be close after observable is completed
 
----
-
