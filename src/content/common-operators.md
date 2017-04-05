@@ -9,36 +9,32 @@
 
 ---
 
-## Array like operators
+## Common array like operators
 
 - `filter()` only values that pass comparison carry on
 - `map()` allows to map values into different ones
 - `reduce()` normal reduce, only emits on complete
-- `scan()` basically a reduce, except does onNext values
-- `pluck()` allows to take a prop off and continue on with it, multi args for nested
-- `take()` good if you only want to take 1 and then ditch it, take(1) is good for http requests to make sure they finish
-- `do()` anything performed in here won't effect your obserable (good for debugging)
+- `take()` good if you only want to take X events and then ditch it
 
 ---
 
-## Useful for events
+## Useful for browser events!
 
-- `debounce()` waits X amount of time till last one finishes before continuing.  If kept typing would not call
-- `throttle()` waits X amount of time between calls, if kept typing, would call every X amount of time
+- `debounce()` waits X amount of time till last one finishes before continuing
+- `throttle()` waits X amount of time between calls
 
 ---
 
 ## Useful for combining observables
 
-- `switchMap()` cancels all previously non finished calls through the stream, and carries on with current one
-- `mergeMap()` returns a new observable that the current observable will continue on with
-- `zip()` outputs continuously matching streams (will keep going to end if all inputs have outputs
-- `combineLatest()` whenever a change happens in any input args, take latest from all and continue on
-- `withLastestFrom()` whenever an event is fired, take the latest values from the streams in the input args
+- `switchMap()` cancels all non finished calls and carries on with current one
+- `mergeMap()` returns a new observable that will be used henceforth
+- `zip()` outputs continuously matching streams
+- `combineLatest()` whenever a change happens, take latest from all and continue on
 
 ---
 
-## Useful utils
+## Useful utilities
 
 - `toArray()` waits until array is done and combines into 1 array
 - `share()` allows you to say at this point, whenever subscribers go from 0 to 1, use what last evaluation was

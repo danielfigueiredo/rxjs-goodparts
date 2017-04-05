@@ -1,16 +1,32 @@
-# Handling errors with RxJS
+## Wait! What if an error happens?
 
-- Errors goes through the onError channel
-- They halt the sequence
-- There are two levels of errors: class and instance
-- Obvious options: ignore errors or deal with them
+---
+
+<div style="text-align: center;">
+  <img src="content/images/ohnoes.jpg" alt="Oh noes" title="Oh noes">
+</div>
+
+---
+
+## Errors go through the onError channel
+
+---
+
+## They halt the sequence
+
+---
+
+## There are two levels of errors: class and instance
 
 ---
 
 ## Class level errors
 
 - Swallowing errors
-- Example: Try remotes or use cached version
+
+---
+
+## Try remotes or use cached version
 
 ```ts
 const source$ = Observable.catch(
@@ -29,28 +45,31 @@ const source$ = Observable.catch(
 
 - Deals with errors from a specific Observable
 - `catch` function callback
+- Callback should return an Observable
+
+---
+
+- On error the source emits the observable returned from `catch`
+- In this case an object that contains the error with a message
 
 ```ts 
 const url = 'http://myresource.com';
 const source$ = Observable.ajax.get(url);
-  .catch(err => {
-    // do something and return an Observable
-    return Observable.from({
-      err,
-      errMsg: 'My error description'
-    });
-  });
+  .catch(err => Observable.from({ err, errMsg: 'My error description' }));
 ```
-- On error the source emits the observable returned from `catch`
-- In this case an object that contains the error with a message
 
 ---
 
 ## Ignoring errors
 
 - Execute series of independent events no matter what
-- `onErrorResumeNext`: ignore errors and continue
-- Let's say functions from utils returns observables
+- `onErrorResumeNext` operator
+- Takes in any number of Observables to be executed
+
+---
+
+- Data will be whatever is emitted from each Observable
+- Result of function1, function2, etc.
 
 ```ts
 const source$ = Observable.onErrorResumeNext(
@@ -58,42 +77,22 @@ const source$ = Observable.onErrorResumeNext(
   Utils.myFunction2(),
   Utils...
 );
-const log = source.subscribe(
-  data => console.log(data)
-);
+const log = source.subscribe(data => console.log(data));
 ```
-
-- Data will be whatever is emitted from each Observable 
-
----
-
-## Delaying errors with multiple sources
-
-- Leaving errors to the end
-- Flattens sequences without being interrupted by one erroneous source
-
-```ts
-const source$ = Observable.mergeDelayError(
-  Utils.myFunction1(), // logs 'Function1'
-  Utils.myFunction2(), // throws Error('boom!')
-  Utils.myFunction3()  // logs 'Function2'
-);
-source$.subscribe(() => {
-  x => console.log('Emits: ', x),
-  err => console.log('Error: ', err)
-});
-```
-
-- This would print 'Emits: Function1', 'Emits: Function1', 'Error: boom!'
 
 ---
 
 ## Finally reminder!
 
-- `finally` to runs after the observable is completed
+- Like regular try catches, you can use `finally`
 - `finally` vs `complete` callback
-- Usage example: clean up resources
-- Let's say `getData` keeps firing until all data is read: 
+- Runs after the is completed regardless the output
+- Common use case: clean up resources
+
+---
+
+- Let's say `getData` keeps firing until all data is read
+- `socket` will be closed even if an error happens
 
 ```ts
 const socket = SocketUtil.getSocket();
@@ -102,6 +101,4 @@ DbUtils.getData()
   .catch(err => log(err)
   .finally(() => socket.close();
 ```
-
-- `socket` will be close after observable is completed
 

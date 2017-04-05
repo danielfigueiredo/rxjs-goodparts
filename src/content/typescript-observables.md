@@ -1,54 +1,79 @@
 # Types in your observables
 
-- `Observable<T>` value is a generic type `T`
-- `T` can be anything you want
+---
+
+## Advantages of having types
+
 - It helps you with compile errors
 - Forces you return a known object
 - Easy to develop since you know what to expect
 
 ---
 
-# RxJS Generic Arguments
+## Generic parameters
+
+- `Observable<T>` value is a generic type `T`
+- `T` can be anything you want
+- Each operator has its own parameter
+
+---
+
+## Where can I find the available parameters?
 
 - The [operators](https://github.com/ReactiveX/rxjs/tree/master/src/operator) page is one of the best sources of available generic arguments
-- Use Typescript interfaces for everything
+
+---
+
+## Generic Arguments
+
+- Making sure you have an observable that returns a known type
+- Provide the arguments when generating the observable
+
+---
+
+- It fails! Ops, I'm not a Cat
 
 ```ts
-interface ICat {
-  name: string;
-  age: number;
-  purr: () => void;
-}
+interface ICat { name: string; age: number; purr: () => void; }
 
-const myCat$ = Observable.of<ICat>({
-  name: 'Midnight',
-  age: 8,
-});
+const myCat$ = Observable.of<ICat>({ name: 'Midnight', age: 8 });
 // this ^ fails with:
 // Type '{ name: string; age: number; }' is not assignable to type 'ICat'.
 ```
 
 ---
 
-## Redux Side-effect handler example 
+## Making things slightly more complicated
 
-- A side-effect handler in Redux could look like:
+- Combining, transforming, and merging
+
+---
+
+## How to provide arguments to a `map` operation?
+
+---
+
+### Map has two generic parameters:
+
+- The type of the observable you are receiving
+- The type of the observable your are returning
+
+---
+
+## Mapping from Cat to Dog
+
+- Provide the generic arguments
 
 ```ts
-interface Action { type: string; }
-interface PayloadAction extends Action { payload: any;} 
+interface IDog { name: string; age: number; bark: () => string; }
+interface ICat { name: string; age: number; purr: () => void; }
 
-const myAction$ = Observable.of({ type: 'MY_ACTION' });
+Observable.ajax('http://get-some-cat.json')
+  .map<ICat, IDog>(myCat => ({
+    name: myCat.name,
+    age: myCat.age,
+    bark: () => '!!!',
+  }));
 
-myAction$.mergeMap<Action, PayloadAction>(() => {
-  return Observable.ajax('http://get.some.json')
-    .map<any, PayloadAction>(result => ({
-      type: 'MY_PAYLOAD_ACTION',
-      payload: result,
-    }))
-    .catch<any, PayloadAction>(err => Observable.of({
-      type: 'MY_ERROR_ACTION',
-      payload: err,
-    }));
-});
 ```
+

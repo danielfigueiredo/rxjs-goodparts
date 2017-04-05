@@ -1,9 +1,3 @@
+# Many thanks!
 
-## Conclusion
-- Some stuff in here
-
----
-
-## Extra Info
- 
-- More stuff in here
+Slides: https://github.com/danielfigueiredo/rxjs-goodparts
