@@ -18,12 +18,6 @@
 
 ---
 
-## Where can I find the available parameters?
-
-- The [operators](https://github.com/ReactiveX/rxjs/tree/master/src/operator) page is one of the best sources of available generic arguments
-
----
-
 ## Generic Arguments
 
 - Making sure you have an observable that returns a known type
