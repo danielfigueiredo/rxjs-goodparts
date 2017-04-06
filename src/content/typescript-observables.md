@@ -1,4 +1,4 @@
-# Types in your observables
+## Types in your observables
 
 ---
 
@@ -12,16 +12,16 @@
 
 ## Generic parameters
 
-- `Observable<T>` value is a generic type `T`
+- `Observable` has a generic parameter `<T>`
 - `T` can be anything you want
-- Each operator has its own parameter
+- Each operator also has its own parameter(s)
 
 ---
 
 ## Generic Arguments
 
-- Making sure you have an observable that returns a known type
-- Provide the arguments when generating the observable
+- Providing the generic arguments makes your Observable be typed
+
 
 ---
 
@@ -37,9 +37,10 @@ const myCat$ = Observable.of<ICat>({ name: 'Midnight', age: 8 });
 
 ---
 
-## Making things slightly more complicated
+## Making things more complicated
 
-- Combining, transforming, and merging
+- Observables can be combined, transformed, and merged
+- Some operators changes the type from X to Y
 
 ---
 
@@ -55,8 +56,6 @@ const myCat$ = Observable.of<ICat>({ name: 'Midnight', age: 8 });
 ---
 
 ## Mapping from Cat to Dog
-
-- Provide the generic arguments
 
 ```ts
 interface IDog { name: string; age: number; bark: () => string; }

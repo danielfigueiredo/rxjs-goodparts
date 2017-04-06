@@ -41,25 +41,6 @@ const source$ = Observable.catch(
 
 ---
 
-## Instance level errors
-
-- Deals with errors from a specific Observable
-- `catch` function callback
-- Callback should return an Observable
-
----
-
-- On error the source emits the observable returned from `catch`
-- In this case an object that contains the error with a message
-
-```ts 
-const url = 'http://myresource.com';
-const source$ = Observable.ajax.get(url);
-  .catch(err => Observable.from({ err, errMsg: 'My error description' }));
-```
-
----
-
 ## Ignoring errors
 
 - Execute series of independent events no matter what
@@ -82,11 +63,30 @@ const log = source.subscribe(data => console.log(data));
 
 ---
 
+## Instance level errors
+
+- Deals with errors from a specific Observable
+- `catch` function callback
+- Callback should return an Observable
+
+---
+
+- On error the source emits the observable returned from `catch`
+- In this case an object that contains the error with a message
+
+```ts 
+const url = 'http://myresource.com';
+const source$ = Observable.ajax.get(url);
+  .catch(err => Observable.from({ err, errMsg: 'My error description' }));
+```
+
+---
+
 ## Finally reminder!
 
 - Like regular try catches, you can use `finally`
 - `finally` vs `complete` callback
-- Runs after the is completed regardless the output
+- Runs after completed, regardless the output
 - Common use case: clean up resources
 
 ---
